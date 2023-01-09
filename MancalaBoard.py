@@ -31,11 +31,10 @@ class MancalaBoard:
         self.indice_player2 = ("G", "H", "I", "J", "K", "L")
 
         self.suivant_player1 = {"A": "B", "B": "C", "C": "D", "D": "E", "E": "F", "F": "M1", "M1": "L", "L": "K",
-                                "K": "J",
-                                "J": "I", "I": "H", "H": "G", "G": "A"}
+                                "K": "J","J": "I", "I": "H", "H": "G", "G": "A"}
 
         self.suivant_player2 = {"A": "B", "B": "C", "C": "D", "D": "E", "E": "F", "F": "L", "L": "K", "K": "J",
-                                "J": "I", "I": "H", "H": "G", "G": "M2", "M2": "A"}
+                                "J": "I", "I": "H", "H": "G", "G":"M2", "M2": "A"}
 
         self.opposer_player1 = {"A": "G", "B": "H", "C": "I", "D": "J", "E": "K", "F": "L"}
         self.opposer_player2 = {"L": "F", "K": "E", "J": "D", "I": "C", "H": "B", "G": "A"}
@@ -109,6 +108,8 @@ class MancalaBoard:
         pygame.display.update()
 
     def possibleMoves(self, player):
+
+      
         indice_possible = []
         if player == 1:
             for i in self.indice_player1:
@@ -136,24 +137,22 @@ class MancalaBoard:
         for x in range(self.bord[i]):
             self.bord[suivant[j]] += 1
             j = suivant[j]
-            next=j
             self.bord[i] = self.bord[i]-1
-            print("last fosse" +j)
-            time.sleep(1)
+            time.sleep(0.5)
             self.drawBoard(self.bord)
             
 
        
         print(self.bord)
-        if next != "M1" and next != "M2":
-            # hedi hiya tae opposer but its not working
-            if self.bord[next] == 1 and (next in indice):
-                self.bord[Mag] = self.bord[Mag] + self.bord[opposer[next]] + self.bord[next]
-                self.bord[opposer[next]] = 0
-                self.bord[next] = 0
+        if j != "M1" and j != "M2":
+            
+            if self.bord[j] == 1 and (j in indice) :
+                self.bord[Mag] = self.bord[Mag] + self.bord[opposer[j]] + self.bord[j]
+                self.bord[opposer[j]] = 0
+                self.bord[j] = 0
                 self.drawBoard(self.bord)
             return -player
         else:
-            self.bord[Mag] = self.bord[Mag] + 1
+            #self.bord[Mag] = self.bord[Mag] + 1
             self.drawBoard(self.bord)
             return player

@@ -17,32 +17,20 @@ manca = MancalaBoard(bord)
 def getfosse(position, playerSide):
     x, y = position
     if playerSide == 1:
-        if (224 <= x <= 283) and (413 <= y <= 483):
-            return "A"
-        if (311 <= x <= 369) and (439 <= y <= 512):
-            return "B"
-        if (407 <= x <= 468) and (459 <= y <= 525):
-            return "C"
-        if (521 <= x <= 582) and (461 <= y <= 524):
-            return "D"
-        if (621 <= x <= 684) and (444 <= y <= 508):
-            return "E"
-        if (710 <= x <= 775) and (417 <= y <= 474):
-            return "F"
+        if (224 <= x <= 283) and (413 <= y <= 483):return "A"
+        if (311 <= x <= 369) and (439 <= y <= 512):return "B"
+        if (407 <= x <= 468) and (459 <= y <= 525):return "C"
+        if (521 <= x <= 582) and (461 <= y <= 524):return "D"
+        if (621 <= x <= 684) and (444 <= y <= 508):return "E"
+        if (710 <= x <= 775) and (417 <= y <= 474):return "F"
 
     else:
-        if (224 <= x <= 283) and (413 <= y <= 483):
-            return "L"
-        if (311 <= x <= 369) and (439 <= y <= 512):
-            return "K"
-        if (407 <= x <= 468) and (459 <= y <= 525):
-            return "J"
-        if (521 <= x <= 582) and (461 <= y <= 524):
-            return "I"
-        if (621 <= x <= 684) and (444 <= y <= 508):
-            return "H"
-        if (710 <= x <= 775) and (417 <= y <= 474):
-            return "G"
+        if (224 <= x <= 283) and (413 <= y <= 483):return "L"
+        if (311 <= x <= 369) and (439 <= y <= 512):return "K"
+        if (407 <= x <= 468) and (459 <= y <= 525):return "J"
+        if (521 <= x <= 582) and (461 <= y <= 524):return "I"
+        if (621 <= x <= 684) and (444 <= y <= 508):return "H"
+        if (710 <= x <= 775) and (417 <= y <= 474):return "G"
 
 
 class Play:
@@ -73,11 +61,10 @@ class Play:
             alpha = -math.inf
             beta = math.inf
             time.sleep(1.5)
-            #self.NegaMaxAlphaBetaPruning(game, Computer, 4, alpha, beta)
-            # best move
+            #best move 
             move = game.bestMoveHeuristic(game.state)
             if move != 0:
-                thisplayer = game.state.doMove(game.playerSide, move)
+                thisplayer = game.state.doMove(-game.playerSide, move)
                 if thisplayer == game.playerSide:
                     self.humanTurn(game)
                 else:
@@ -137,7 +124,7 @@ class Play:
                 time.sleep(1)
                 # Alpha Beta Pruning
                 if beta <= alpha:
-                    break
+                    break 
             return best
 
     def NegaMaxAlphaBetaPruning(self, game, player, depth, alpha, beta):
