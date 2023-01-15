@@ -1,7 +1,7 @@
 import math
 import sys
 import time
-
+from copy import deepcopy
 import pygame
 
 
@@ -72,8 +72,13 @@ class Play:
                     self.computerTurn(game)
             else:
                 # normal move
-                self.NegaMaxAlphaBetaPruning(game, Computer, 4, alpha, beta)
-                #self.minimax(4, Computer, game, alpha, beta)
+                move , best_move=self.minmaxAlphaBetaPruning(4,-game.playerSide, game, alpha, beta)
+                thisplayer = game.state.doMove(-game.playerSide, best_move)
+                if thisplayer == game.playerSide:
+                    self.humanTurn(game)
+                else:
+                    game.state.displayText(screen, "THE COMPUTER PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
+                    self.computerTurn(game)
 
         else:
             game.state.showGameOverText(game)
@@ -157,3 +162,36 @@ class Play:
             if beta <= alpha:
                 break
         return bestValue, bestPit
+
+    def minmaxAlphaBetaPruning(self, depth, Player, game, alpha, beta):
+        if   depth == 0 or game.gameOver():
+            return game.evaluate(), None
+
+        if Player == -game.playerSide :
+            best_value = -math.inf
+            best_move = None
+            for move in game.state.possibleMoves(player):
+                new_game = deepcopy(game)
+                Player=new_game.state.doMove2(Player, move)
+                value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)
+                if value > best_value:
+                    best_value = value
+                    best_move = move
+                alpha = max(alpha, best_value)
+                if alpha >= beta:
+                    break
+            return best_value, best_move
+        else:
+            best_value = math.inf
+            best_move = None
+            for move in game.state.possibleMoves(player):
+                new_game = deepcopy(game)
+                Player=new_game.state.doMove2(Player, move)
+                value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)
+                if value < best_value:
+                    best_value = value
+                    best_move = move
+                beta = min(beta, best_value)
+                if alpha >= beta:
+                    break
+            return best_value, best_move

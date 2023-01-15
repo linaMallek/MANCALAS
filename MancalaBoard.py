@@ -156,3 +156,34 @@ class MancalaBoard:
             #self.bord[Mag] = self.bord[Mag] + 1
             self.drawBoard(self.bord)
             return player
+
+    def doMove2(self, player, i):
+        if player == 1:
+            suivant = self.suivant_player1
+            indice = self.indice_player1
+            opposer = self.opposer_player1
+            Mag = "M1"
+        else:
+            suivant = self.suivant_player2
+            indice = self.indice_player2
+            opposer = self.opposer_player2
+            Mag = "M2"
+        j = i
+        for x in range(self.bord[i]):
+            self.bord[suivant[j]] += 1
+            j = suivant[j]
+            self.bord[i] = self.bord[i]-1
+            
+
+        print("bord ni niden ")
+        print(self.bord)
+        if j != "M1" and j != "M2":
+            
+            if self.bord[j] == 1 and (j in indice) :
+                self.bord[Mag] = self.bord[Mag] + self.bord[opposer[j]] + self.bord[j]
+                self.bord[opposer[j]] = 0
+                self.bord[j] = 0
+              
+            return -player
+        else:
+            return player
