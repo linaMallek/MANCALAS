@@ -41,8 +41,8 @@ class Play:
             while not move_made:
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONUP:
-                        pos = pygame.mouse.get_pos()
-                        fosse = getfosse(pos, game.playerSide)
+                        position = pygame.mouse.get_pos()
+                        fosse = getfosse(position, game.playerSide)
                         if fosse in game.state.possibleMoves(game.playerSide):
                             player = game.state.doMove(game.playerSide, fosse)
                             move_made = True
