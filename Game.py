@@ -115,7 +115,26 @@ class Game:
             return move
 
         # prochaine etape: essayer de jouer un move qui va contrer le best move pour l'adverssaire
+    
+    def getfosse(position, playerSide):
+     x, y = position
+     if playerSide == 1:
+        if (224 <= x <= 283) and (413 <= y <= 483):return "A"
+        if (311 <= x <= 369) and (439 <= y <= 512):return "B"
+        if (407 <= x <= 468) and (459 <= y <= 525):return "C"
+        if (521 <= x <= 582) and (461 <= y <= 524):return "D"
+        if (621 <= x <= 684) and (444 <= y <= 508):return "E"
+        if (710 <= x <= 775) and (417 <= y <= 474):return "F"
 
+     else:
+        if (224 <= x <= 283) and (413 <= y <= 483):return "L"
+        if (311 <= x <= 369) and (439 <= y <= 512):return "K"
+        if (407 <= x <= 468) and (459 <= y <= 525):return "J"
+        if (521 <= x <= 582) and (461 <= y <= 524):return "I"
+        if (621 <= x <= 684) and (444 <= y <= 508):return "H"
+        if (710 <= x <= 775) and (417 <= y <= 474):return "G"
+
+        
     def main(self):
         play = Play()
         bord = {"A": 4, "B": 4, "C": 4, "D": 4, "E": 4, "F": 4, "M1": 0, "G": 4, "H": 4, "I": 4, "J": 4, "K": 4, "L": 4,

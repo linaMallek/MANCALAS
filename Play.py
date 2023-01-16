@@ -7,31 +7,10 @@ import pygame
 
 from MancalaBoard import MancalaBoard, screen, red
 
-Human = 1
-Computer = -1
+
 bord = {"A": 4, "B": 4, "C": 4, "D": 4, "E": 4, "F": 4, "M1": 0, "G": 4, "H": 4, "I": 4, "J": 4, "K": 4, "L": 4,
         "M2": 0}
 manca = MancalaBoard(bord)
-
-
-def getfosse(position, playerSide):
-    x, y = position
-    if playerSide == 1:
-        if (224 <= x <= 283) and (413 <= y <= 483):return "A"
-        if (311 <= x <= 369) and (439 <= y <= 512):return "B"
-        if (407 <= x <= 468) and (459 <= y <= 525):return "C"
-        if (521 <= x <= 582) and (461 <= y <= 524):return "D"
-        if (621 <= x <= 684) and (444 <= y <= 508):return "E"
-        if (710 <= x <= 775) and (417 <= y <= 474):return "F"
-
-    else:
-        if (224 <= x <= 283) and (413 <= y <= 483):return "L"
-        if (311 <= x <= 369) and (439 <= y <= 512):return "K"
-        if (407 <= x <= 468) and (459 <= y <= 525):return "J"
-        if (521 <= x <= 582) and (461 <= y <= 524):return "I"
-        if (621 <= x <= 684) and (444 <= y <= 508):return "H"
-        if (710 <= x <= 775) and (417 <= y <= 474):return "G"
-
 
 class Play:
     def humanTurn(self, game):
@@ -42,7 +21,7 @@ class Play:
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONUP:
                         position = pygame.mouse.get_pos()
-                        fosse = getfosse(position, game.playerSide)
+                        fosse = game.getfosse(position, game.playerSide)
                         if fosse in game.state.possibleMoves(game.playerSide):
                             player = game.state.doMove(game.playerSide, fosse)
                             move_made = True
