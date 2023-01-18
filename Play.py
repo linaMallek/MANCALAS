@@ -45,71 +45,47 @@ class Play:
             if move != 0:
                 thisplayer = game.state.doMove(-game.playerSide, move)
                 if thisplayer == game.playerSide:
-                    self.humanTurn(game)
+                    self.computerTurn2(game)
                 else:
-                    game.state.displayText(screen, "THE COMPUTER PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
+                    game.state.displayText(screen, "THE COMPUTER 2 PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
                     self.computerTurn(game)
             else:
                 # normal move
                 move , best_move=self.minmaxAlphaBetaPruning(4,-game.playerSide, game, alpha, beta)
                 thisplayer = game.state.doMove(-game.playerSide, best_move)
                 if thisplayer == game.playerSide:
-                    self.humanTurn(game)
+                    self.computerTurn2(game)
                 else:
-                    game.state.displayText(screen, "THE COMPUTER PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
-                    self.computerTurn(game)
+                    game.state.displayText(screen, "THE COMPUTER 2 PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
+                    self.computerTurn(game)            
 
         else:
             game.state.showGameOverText(game)
 
-    def minimax(self, depth, Player, game, alpha, beta):
-        MAX, MIN = 1000, -1000
-        # Terminating condition
-        # leaf node is reached
-        if game.gameOver() or depth == 0:
-            # return game.evaluate(), None
-            return game.ourHeuristic(), None
 
-        if Player == -game.playerSide:  # max
-            best = MIN
-            # Recur for left and right children
-            for pit in game.state.possibleMoves(-game.playerSide):
+    def computerTurn2(self, game):
+         if not game.gameOver():
+            alpha = -math.inf
+            beta = math.inf
+            time.sleep(1.5)
+            #best move 
+            
+                # normal move
+            move , best_move=self.minmaxAlphaBetaPruning2(6,game.playerSide, game, alpha, beta)
+            thisplayer = game.state.doMove(game.playerSide, best_move)
 
-                child_game = game
-                # print(game.state)
-                Player = child_game.state.doMove(-child_game.playerSide, pit)
-                self.humanTurn(game)
-                time.sleep(1)
-                val = self.minimax(depth + 1, Player, child_game, MIN, MAX)
-                best = max(best, val)
-                alpha = max(alpha, best)
-                self.humanTurn(game)
-                time.sleep(1)
-                # Alpha Beta Pruning
-                if beta <= alpha:
-                    break
-            print("best is" + str(best))
-            return best
+            if thisplayer == -game.playerSide:
+                    self.computerTurn(game)
+            else:
+                    game.state.displayText(screen, "COMPUTER 1 PLAYS AGAIN !", 380, 30,(139,69,19), 28, True)
+                    self.computerTurn2(game)            
 
-        else:
-            best = MAX
-            # Recur for left and
-            # right children
-            for pit in game.state.possibleMoves(-game.playerSide):
-                child_game = game
-                # print(game.state)
-                Player = child_game.state.doMove(-game.playerSide, pit)
-                self.humanTurn(game)
-                time.sleep(1)
-                val = self.minimax(depth + 1, Player, child_game, MIN, MAX)
-                best = min(best, val)
-                beta = min(beta, best)
-                self.humanTurn(game)
-                time.sleep(1)
-                # Alpha Beta Pruning
-                if beta <= alpha:
-                    break 
-            return best
+         else:
+            game.state.showGameOverText(game)    
+
+
+  
+  
 
     def NegaMaxAlphaBetaPruning(self, game, player, depth, alpha, beta):
         if game.gameOver() or depth == 1:
@@ -144,12 +120,12 @@ class Play:
 
     def minmaxAlphaBetaPruning(self, depth, Player, game, alpha, beta):
         if   depth == 0 or game.gameOver():
-            return game.evaluate(), None
+            return game.ourHeuristic(game.state,Player), None
 
         if Player == -game.playerSide :
             best_value = -math.inf
             best_move = None
-            for move in game.state.possibleMoves(player):
+            for move in game.state.possibleMoves(Player):
                 new_game = deepcopy(game)
                 Player=new_game.state.doMove2(Player, move)
                 value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)
@@ -163,7 +139,40 @@ class Play:
         else:
             best_value = math.inf
             best_move = None
-            for move in game.state.possibleMoves(player):
+            for move in game.state.possibleMoves(Player):
+                new_game = deepcopy(game)
+                Player=new_game.state.doMove2(Player, move)
+                value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)
+                if value < best_value:
+                    best_value = value
+                    best_move = move
+                beta = min(beta, best_value)
+                if alpha >= beta:
+                    break
+            return best_value, best_move
+
+    def minmaxAlphaBetaPruning2(self, depth, Player, game, alpha, beta):
+        if   depth == 0 or game.gameOver():
+            return game.evaluate(), None
+
+        if Player == game.playerSide :
+            best_value = -math.inf
+            best_move = None
+            for move in game.state.possibleMoves(Player):
+                new_game = deepcopy(game)
+                Player=new_game.state.doMove2(Player, move)
+                value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)
+                if value > best_value:
+                    best_value = value
+                    best_move = move
+                alpha = max(alpha, best_value)
+                if alpha >= beta:
+                    break
+            return best_value, best_move
+        else:
+            best_value = math.inf
+            best_move = None
+            for move in game.state.possibleMoves(Player):
                 new_game = deepcopy(game)
                 Player=new_game.state.doMove2(Player, move)
                 value, _ = self.minmaxAlphaBetaPruning(depth - 1,Player,new_game, alpha, beta)

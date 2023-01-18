@@ -36,21 +36,21 @@ class Game:
     def findWinner(self):
         if self.playerSide == 1:
             if self.state.bord["M1"] > self.state.bord["M2"]:
-                return "YOU WON !"
+                return "COMPUTER 1 WON !"
             else:
-                return "YOU LOST :("
+                return "COMPUTER 2 LOST :("
         else:
             if self.state.bord["M2"] > self.state.bord["M1"]:
-                return "YOU WON !"
+                return "COMPUTER 2 WON !"
             else:
-                return "YOU LOST :("
+                return "COMPUTER 2 LOST :("
 
     def evaluate(self):
         n = self.state.bord["M1"] - self.state.bord["M2"]
         return n
 
     def getNBgraines(self, manca):
-        global nb
+        nb=0
         if self.playerSide == 1:
             for i in manca.indice_player1:
                 nb = nb + manca.bord[i]
@@ -60,7 +60,7 @@ class Game:
         return nb
 
     def getFirstleftNoneEmptyFosse(self, manca, player):
-        index = manca.possibleMoves(manca, player)[0]
+        index = manca.possibleMoves(player)[0]
         return index
 
     def ourHeuristic(self, manca, player):
@@ -72,7 +72,7 @@ class Game:
             indexfosseGauche = self.getFirstleftNoneEmptyFosse(manca, player)
             nbGraineDansFosseGauche = self.state.bord[indexfosseGauche]
             nbDeGraines = self.getNBgraines(manca)  # la somme des billes dans les fosses player
-            nbFosseVide = len(manca.possibleMoves(manca, player))
+            nbFosseVide = len(manca.possibleMoves( player))
             nbGrainemagasin = self.state.bord["M2"]
             for i in manca.indice_player2:
                 if manca.bord[i] < 7 - manca.indice_player2.index(
@@ -82,7 +82,7 @@ class Game:
             indexfosseGauche = self.getFirstleftNoneEmptyFosse(manca, player)
             nbGraineDansFosseGauche = self.state.bord[indexfosseGauche]
             nbDeGraines = self.getNBgraines(manca)  # la somme des billes dans les fosses player
-            nbFosseVide = len(manca.possibleMoves(manca, player))
+            nbFosseVide = len(manca.possibleMoves(player))
             nbGrainemagasin = self.state.bord["M1"]
             for i in manca.indice_player1:
                 if nbDeGraines > nbGrainemagasin and nbFosseVide > 0 and manca.bord[
@@ -143,10 +143,10 @@ class Game:
         manca = MancalaBoard(bord)
         while not self.gameOver():
             if self.playerSide == 1:
-                manca.displayText(screen, "YOU GO FIRST !", 380, 30, brown, 28, True)
-                Play.humanTurn(play, self)
+                manca.displayText(screen, "COMPUTER 1 !", 380, 30, brown, 28, True)
+                Play.computerTurn2(play, self)
             else:
-                manca.displayText(screen, "THE COMPUTER GO FIRST !", 350, 30, brown, 28, True)
+                manca.displayText(screen, "COMPUTER 2 !", 350, 30, brown, 28, True)
                 Play.computerTurn(play, self)
         time.sleep(5)
         sys.exit()

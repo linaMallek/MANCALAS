@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((width, height))
 
 gameOver = False
 
-menuImage = pygame.image.load('images/MenuMancala.png')
+menuImage = pygame.image.load('images/m.png')
 aroow = pygame.image.load('images/Arrow.png')
 
 screen.blit(menuImage, (0, 0))
