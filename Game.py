@@ -116,7 +116,7 @@ class Game:
 
         # prochaine etape: essayer de jouer un move qui va contrer le best move pour l'adverssaire
     
-    def getfosse(position, playerSide):
+    def getfosse(self,position, playerSide):
      x, y = position
      if playerSide == 1:
         if (224 <= x <= 283) and (413 <= y <= 483):return "A"
