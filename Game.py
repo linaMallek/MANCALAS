@@ -24,13 +24,13 @@ class Game:
                 vide2 = False
 
         if vide1==True:
-            for i in self.state.indice_player1:
-                self.state.bord["M1"] = self.state.bord["M1"] + self.state.bord[i]
+            for i in self.state.indice_player2:
+                self.state.bord["M2"] = self.state.bord["M2"] + self.state.bord[i]
                 return True
 
         if vide2==True:
-            for i in self.state.indice_player2:
-                self.state.bord["M2"] = self.state.bord["M2"] + self.state.bord[i]
+            for i in self.state.indice_player1:
+                self.state.bord["M1"] = self.state.bord["M1"] + self.state.bord[i]
                 return True
 
     def findWinner(self):
