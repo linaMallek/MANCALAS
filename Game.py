@@ -14,6 +14,7 @@ class Game:
     def gameOver(self):
         vide1 = True
         vide2 = True
+        
         for i in self.state.indice_player1:
             if self.state.bord[i] > 0:
                 vide1 = False
@@ -22,12 +23,12 @@ class Game:
             if self.state.bord[i] > 0:
                 vide2 = False
 
-        if vide1:
+        if vide1==True:
             for i in self.state.indice_player1:
                 self.state.bord["M1"] = self.state.bord["M1"] + self.state.bord[i]
                 return True
 
-        if vide2:
+        if vide2==True:
             for i in self.state.indice_player2:
                 self.state.bord["M2"] = self.state.bord["M2"] + self.state.bord[i]
                 return True

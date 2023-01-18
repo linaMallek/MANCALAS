@@ -113,8 +113,8 @@ class Play:
 
     def NegaMaxAlphaBetaPruning(self, game, player, depth, alpha, beta):
         if game.gameOver() or depth == 1:
-            bestValue = game.evaluate()
-            #bestValue = game.ourHeuristic()
+            #bestValue = game.evaluate()
+            bestValue = game.ourHeuristic()
             bestPit = None
             if player == game.playerSide:
                 bestValue = - bestValue
